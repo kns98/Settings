@@ -5,5 +5,5 @@ You can edit the application settings on the screen below
  
 ![image](https://github.com/minoru-nagasawa/SampleApplicationSettingsDialog/blob/master/sample.png)
 
-詳細は以下を参照してください。  
+Credits: See below  
 https://qiita.com/minoru-nagasawa/items/7d173274b4468fd9629a
