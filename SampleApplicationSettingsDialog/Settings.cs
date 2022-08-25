@@ -9,33 +9,33 @@ namespace SettingsDialog.Properties
     {
         public Settings()
         {
-            // PropertyGridのCategoryを設定する
+            //Set the Category of the PropertyGrid
             var categoryTable = new Dictionary<string, Attribute>
             {
-                { nameof(BoolSetting), new CategoryAttribute("組み込みのデータ型") },
-                { nameof(StringSetting), new CategoryAttribute("組み込みのデータ型") },
-                { nameof(StringCollectionSetting), new CategoryAttribute("複合データ型") },
-                { nameof(DateTimeSetting), new CategoryAttribute("複合データ型") },
-                { nameof(IntSetting), new CategoryAttribute("組み込みのデータ型") }
+                { nameof(BoolSetting), new CategoryAttribute("Built-in data types") },
+                { nameof(StringSetting), new CategoryAttribute("Built-in data types") },
+                { nameof(StringCollectionSetting), new CategoryAttribute("Complex data type") },
+                { nameof(DateTimeSetting), new CategoryAttribute("Complex data type") },
+                { nameof(IntSetting), new CategoryAttribute("Built-in data types") }
             };
             addAttribute(categoryTable);
 
-            // PropertyGridのHelpテキストを設定する
+            //Set the Help text in the PropertyGrid
             var descriptionTable = new Dictionary<string, Attribute>
             {
-                { nameof(BoolSetting), new DescriptionAttribute("bool型の設定") },
-                { nameof(StringSetting), new DescriptionAttribute("string型の設定") },
-                { nameof(StringCollectionSetting), new DescriptionAttribute("複数のstring型の設定") },
-                { nameof(DateTimeSetting), new DescriptionAttribute("DateTime型の設定") },
-                { nameof(IntSetting), new DescriptionAttribute("int型の設定") }
+                { nameof(BoolSetting), new DescriptionAttribute("Setting bool") },
+                { nameof(StringSetting), new DescriptionAttribute("Setting string type") },
+                { nameof(StringCollectionSetting), new DescriptionAttribute("Setting multiple string types") },
+                { nameof(DateTimeSetting), new DescriptionAttribute("Set DateTime type") },
+                { nameof(IntSetting), new DescriptionAttribute("Set int type") }
             };
             addAttribute(descriptionTable);
         }
 
         /// <summary>
-        ///     プロパティに属性を追加する
+        //Add an attribute to a property
         /// </summary>
-        /// <param name="attributeTable">Key:プロパティ名、Value:追加する属性</param>
+        //<param name="attributeTable">Key: property name, Value: attribute to add</param>
         private void addAttribute(Dictionary<string, Attribute> attributeTable)
         {
             if (attributeTable == null) return;
@@ -46,9 +46,9 @@ namespace SettingsDialog.Properties
                 Attribute attribute;
                 if (attributeTable.TryGetValue(p.Name, out attribute))
                 {
-                    // 属性を追加する。
-                    // 本当はMemberDescriptor.Attributes.Addのようにしたいのだが、Attributes属性はgetだけ定義されている。
-                    // そのためリフレクションを使って属性を追加する
+                    //Add attributes.
+                    //I really want it to be like MemberDescriptor.Attributes.Add, but the Attributes attribute is defined only by get.
+                    //So use reflection to add attributes
                     var fi = p.Attributes.GetType()
                         .GetField("_attributes", BindingFlags.NonPublic | BindingFlags.Instance);
                     var attrs = fi.GetValue(p.Attributes) as Attribute[];
