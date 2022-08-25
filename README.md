@@ -3,7 +3,7 @@
 This is a sample of a generic application settings edit screen written in C#. 
 You can edit the application settings on the screen below
  
-![image](https://github.com/minoru-nagasawa/SampleApplicationSettingsDialog/blob/master/sample.png)
+![image](https://github.com/kns98/Settings/sample/Form.png)
 
 Credits: See below  
 https://qiita.com/minoru-nagasawa/items/7d173274b4468fd9629a
