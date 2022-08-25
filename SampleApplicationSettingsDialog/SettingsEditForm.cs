@@ -8,9 +8,9 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
-using SampleApplicationSettingsDialog.Properties;
+using SettingsDialog.Properties;
 
-namespace SampleApplicationSettingsDialog
+namespace SettingsDialog
 {
     public partial class SettingsEditForm : Form
     {

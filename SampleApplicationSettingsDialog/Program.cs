@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace SampleApplicationSettingsDialog
+namespace SettingsDialog
 {
     internal static class Program
     {

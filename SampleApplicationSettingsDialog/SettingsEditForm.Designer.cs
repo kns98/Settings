@@ -1,4 +1,4 @@
-﻿namespace SampleApplicationSettingsDialog
+﻿namespace SettingsDialog
 {
     partial class SettingsEditForm
     {

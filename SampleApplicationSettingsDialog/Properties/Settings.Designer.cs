@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SampleApplicationSettingsDialog.Properties {
+namespace SettingsDialog.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

@@ -5,9 +5,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using SampleApplicationSettingsDialog.Properties;
+using SettingsDialog.Properties;
 
-namespace SampleApplicationSettingsDialog
+namespace SettingsDialog
 {
     public partial class MainForm : Form
     {

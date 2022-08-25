@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 
-namespace SampleApplicationSettingsDialog.Properties
+namespace SettingsDialog.Properties
 {
     internal sealed partial class Settings
     {
