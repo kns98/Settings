@@ -216,5 +216,15 @@ namespace SettingsDialog
         {
             
         }
+
+        private void propertyGrid1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonClose_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
