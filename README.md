@@ -1,6 +1,8 @@
-# SampleApplicationSettingsDialog
-C#で書いた汎用的なアプリケーション設定の編集画面のサンプルです。  
-以下のような画面でアプリケーション設定を編集できます。  
+# Sample Application Settings Dialog
+
+This is a sample of a generic application settings edit screen written in C#. 
+You can edit the application settings on the screen below
+ 
 ![image](https://github.com/minoru-nagasawa/SampleApplicationSettingsDialog/blob/master/sample.png)
 
 詳細は以下を参照してください。  
