@@ -1,16 +1,19 @@
-﻿namespace SettingsDialog
+﻿using System.ComponentModel.Design;
+using System.Runtime.Remoting.Contexts;
+
+namespace SettingsDialog
 {
     partial class MainForm
     {
         /// <summary>
-        /// 必要なデザイナー変数です。
+        //Required designer variables.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        /// 使用中のリソースをすべてクリーンアップします。
+        //Clean up any resources that are in use.
         /// </summary>
-        /// <param name="disposing">マネージ リソースを破棄する場合は true を指定し、その他の場合は false を指定します。</param>
+        //<param name = "disposing" > Specify  true  to destroy managed resources, false otherwise. </param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,11 +23,12 @@
             base.Dispose(disposing);
         }
 
-        #region Windows フォーム デザイナーで生成されたコード
+        #region Code  generated in Windows Forms Designer
 
         /// <summary>
-        /// デザイナー サポートに必要なメソッドです。このメソッドの内容を
-        /// コード エディターで変更しないでください。
+        //Required methods for designer support.The contents of this method are
+       
+         //Do not change it in the code editor.
         /// </summary>
         private void InitializeComponent()
         {
@@ -60,8 +64,8 @@
             // 
             // dataGridView1
             // 
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
@@ -115,4 +119,5 @@
         private System.Windows.Forms.Button buttonOpenDir;
     }
 }
+
 

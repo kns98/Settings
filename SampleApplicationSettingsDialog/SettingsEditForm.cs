@@ -15,36 +15,38 @@ namespace SettingsDialog
     public partial class SettingsEditForm : Form
     {
         /// <summary>
-        ///     設定のコピーを保管する
+        //Keep a copy of your settings
         /// </summary>
         private readonly Settings copiedSettings;
 
         /// <summary>
-        ///     コンストラクタ
+        //constructor
         /// </summary>
         public SettingsEditForm()
         {
             InitializeComponent();
 
-            // StringCollectionの初期の編集画面では追加ができない。
-            // これを実行することで編集画面が変わり、追加できるようになる。
+            // Additions cannot be made in the initial edit screen of the StringCollection.
+            //By executing this, the edit screen changes and you can add it.
             TypeDescriptor.AddAttributes(typeof(StringCollection),
                 new EditorAttribute(
-                    "System.Windows.Forms.Design.StringCollectionEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a",
+                    "System.Windows.Forms.Design. StringCollectionEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a",
                     typeof(UITypeEditor)));
 
-            // 設定のコピーを作成する
+            //Make a copy of your settings
             copiedSettings = new Settings();
             foreach (SettingsProperty property in Settings.Default.Properties)
-                // StringCollection型のために必要
+                //Required for StringCollection type
+
                 copiedSettings[property.Name] = deepCopy(Settings.Default[property.Name]);
 
-            // コピーしたオブジェクトを表示させる
+            // Make the copied object visible
+
             propertyGrid1.SelectedObject = copiedSettings;
         }
 
         /// <summary>
-        ///     オブジェクトのディープコピーを作成する
+        ////Make a deep copy of an object
         /// </summary>
         private static T deepCopy<T>(T src)
         {
@@ -58,91 +60,93 @@ namespace SettingsDialog
         }
 
         /// <summary>
-        ///     編集値を保存する
+        //Save your edits
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
+        //<param name="e"></param>
         private void buttonSave_Click(object sender, EventArgs e)
         {
             foreach (SettingsProperty property in Settings.Default.Properties)
-                // StringCollection型のために必要
+                // Required for StringCollection type
+
                 Settings.Default[property.Name] = deepCopy(copiedSettings[property.Name]);
             Settings.Default.Save();
-            MessageBox.Show("保存しました");
+            MessageBox.Show("Saved");
         }
 
         /// <summary>
-        ///     現在の保存されている値をエクスポートする
+        //Export the current saved values
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
+        //<param name="e"></param>
         private void buttonExport_Click(object sender, EventArgs e)
         {
-            // ファイルを選択
+            //Select File
             string fullPath;
             using (var sfd = new SaveFileDialog())
             {
                 sfd.FileName = "user.config";
                 sfd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-                sfd.Filter = "設定ファイル(*.config)|*.config";
+                sfd.Filter = "configuration file (*.config)|*.config";
                 sfd.FilterIndex = 1;
-                sfd.Title = "エクスポート先のファイルを選択してください";
+                sfd.Title = "Select the destination file";
                 sfd.RestoreDirectory = true;
                 if (sfd.ShowDialog() != DialogResult.OK) return;
 
                 fullPath = sfd.FileName;
             }
 
-            // ファイルをコピー
+            //Copy File
             try
             {
-                // user.configのパスを取得
+                //Get the path of user.config
                 var userConfigPath = ConfigurationManager
                     .OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
 
-                // ファイルが無ければSave()して生成する
+                //If there is no file, save() and generate it
                 if (!File.Exists(userConfigPath)) Settings.Default.Save();
 
-                // エクスポートはファイルをコピーするだけ
+                //Export is just copying files
                 File.Copy(userConfigPath, fullPath, true);
-                MessageBox.Show("エクスポートしました");
+                MessageBox.Show("Exported");
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "エクスポート失敗", MessageBoxButtons.OK);
+                MessageBox.Show(ex.ToString(), "Export Failed", MessageBoxButtons.OK);
             }
         }
 
         /// <summary>
-        ///     ファイルから設定をインポートする
+        //Import settings from a file
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
+        //<param name="e"></param>
         private void buttonImport_Click(object sender, EventArgs e)
         {
-            // ファイル選択
+            //File Selection
             var fullPath = "";
             using (var ofd = new OpenFileDialog())
             {
                 ofd.FileName = "user.config";
                 ofd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-                ofd.Filter = "設定ファイル(*.config)|*.config";
+                ofd.Filter = "configuration file (*.config)|*.config";
                 ofd.FilterIndex = 1;
-                ofd.Title = "インポートするファイルを選択してください";
+                ofd.Title = "Please select a file to import";
                 ofd.RestoreDirectory = true;
                 if (ofd.ShowDialog() != DialogResult.OK) return;
 
                 fullPath = ofd.FileName;
             }
 
-            // 読み込み
+            //Load
             ClientSettingsSection section = null;
             try
             {
-                // ExeConfigFilenameにインポートするファイルだけ指定しても、そのファイルにはセクション情報が書かれていないためGetSectionで正しく読めない。
-                // さらに、ExeConfigFilenameにアプリケーション設定、RoamingUserConfigFilenameにインポートするファイルを指定しても、正しく動かない場合がある。
-                // 例えばインポートするファイルに吐かれていない新規設定がある場合、本来は現在値を保持してほしいが、デフォルト値で上書きしてしまう。
-                // ということで、ExeConfigFilename/RoamingUserConfigFilenam/LocalUserConfigFilenameの3つを指定して読み込む。
+                // Even if you specify only the file to be imported into ExeConfigFilename, it cannot be read correctly by GetSection because the section information is not written in that file. 
+                //In addition, even if you specify the application settings in ExeConfigFilename and the file to be imported into RoamingUserConfigFilename, it may not work correctly.
+                //For example, if there is a new setting that has not been vomited into the file to be imported, you should originally want to keep the current value, but it will be overwritten with the default value.
+                //So, specify ExeConfigFilename/ RoamingUserConfigFilenam / LocalUserConfigFilename and load it.
+
                 var tmpAppConfig = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
                 var tmpUserCOnfig =
                     ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
@@ -159,36 +163,36 @@ namespace SettingsDialog
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "インポート失敗", MessageBoxButtons.OK);
+                MessageBox.Show(ex.ToString(), "Import Failed", MessageBoxButtons.OK);
                 return;
             }
 
-            // データの更新
+            //Refreshing data
             try
             {
-                // Key:プロパティ名、Value:読み込んだファイルの該当プロパティのSettingElement、のDictionaryを作成する
+                // Key: Create a dictionary of the property name, Value: SettingElement, of the corresponding property of the imported file
                 var dict = new Dictionary<string, SettingElement>();
                 foreach (SettingElement v in section.Settings) dict.Add(v.Name, v);
 
-                // 現在の設定を更新する
+                // Update the current settings
                 foreach (SettingsPropertyValue value in copiedSettings.PropertyValues)
                 {
                     SettingElement element;
                     if (dict.TryGetValue(value.Name, out element))
                     {
-                        // SerializedValueを1度も参照していないと、参照したときの元の値に戻ってしまうという仕様になっている。
+                        //If SerializedValue is not referenced even once, it is specified that it will return to the original value when it was referenced.
                         // https://referencesource.microsoft.com/#System/sys/system/configuration/SettingsPropertyValue.cs,69
-                        // その対策として、リフレクションで無理やり内部のメンバをfalseに変更する。
-                        // リフレクションを使わなくても、var dummy = value.SerializedValueを実行して1度参照する方法でもよい。
+                        //As a countermeasure, forcibly change the internal member to false by reflection.
+                        //Even without reflection, var dummy = value.It may be a method of executing SerializedValue and referencing it once.
                         var _ChangedSinceLastSerialized = typeof(SettingsPropertyValue).GetField(
                             "_ChangedSinceLastSerialized",
                             BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Instance);
                         _ChangedSinceLastSerialized.SetValue(value, false);
 
-                        // 値の設定
+                        //Setting the value
                         value.SerializedValue = element.Value.ValueXml.InnerXml;
 
-                        // value.Deserializedをfalseにすると、value.PropertyValueにアクセスしたときにDeserializeされる.
+                        //value.If you set Deserialized to false, the value.It is deserialized when the PropertyValue is accessed.
                         // https://referencesource.microsoft.com/#System/sys/system/configuration/SettingsPropertyValue.cs,40
                         value.Deserialized = false;
                     }
@@ -196,15 +200,21 @@ namespace SettingsDialog
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "インポート失敗", MessageBoxButtons.OK);
+                MessageBox.Show(ex.ToString(), "Import Failed", MessageBoxButtons.OK);
                 return;
             }
 
-            // 画面を更新
+            //Refresh Screen
             propertyGrid1.SelectedObject = copiedSettings;
 
-            // メッセージ
-            MessageBox.Show("インポートした設定を反映するには保存を押してください");
+            //message
+            MessageBox.Show("Press Save to reflect imported settings");
+        }
+
+
+        private void SettingsEditForm_Load(object sender, EventArgs e)
+        {
+            
         }
     }
 }
